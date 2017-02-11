@@ -31,6 +31,7 @@ import com.google.engedu.worldladder.R;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class WordSelectionActivity extends AppCompatActivity {
 
@@ -55,11 +56,14 @@ public class WordSelectionActivity extends AppCompatActivity {
     public boolean onStart(View view) {
         TextView startWordView = (TextView) findViewById(R.id.startWord);
         TextView endWordView = (TextView) findViewById(R.id.endWord);
-        String[] words = dictionary.findPath(
+        ArrayList<String> words = dictionary.findPath(
                 startWordView.getText().toString().toLowerCase(),
                 endWordView.getText().toString().toLowerCase());
         if (words != null) {
             // TODO: Launch new activity here
+            Intent intent = new Intent(this,SolverActivity.class);
+            intent.putStringArrayListExtra("path",words);
+            startActivity(intent);
         } else {
             Log.i("Word ladder", "Word combination is not possible");
             Toast toast = Toast.makeText(this, "Couldn't find path between the two given words",
